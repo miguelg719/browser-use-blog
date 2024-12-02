@@ -4,6 +4,9 @@ const repoName = 'browser-use-blog'; // Replace with your GitHub repo name
 
 const nextConfig = {
   output: 'export',
+  images: {
+    unoptimized: true,
+  },
   basePath: isProd ? `/${repoName}` : '',
   assetPrefix: isProd ? `/${repoName}/` : '',
   trailingSlash: true,

@@ -7,7 +7,7 @@ type Props = {
   content: string;
 };
 
-function estimateReadTime(text: string, wordsPerMinute: number = 110): string {
+function estimateReadTime(text: string, wordsPerMinute: number = 100): string {
   const words = text.trim().split(/\s+/).length;
   const minutes = words / wordsPerMinute;
   const roundedMinutes = Math.ceil(minutes);

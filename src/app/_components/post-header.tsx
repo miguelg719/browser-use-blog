@@ -38,7 +38,10 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
           <Image
             src={videoSrc}
             alt={title}
+            width={800}
+            height={800}
             // ... other Image props
+            className="rounded-lg bg-gray-100 dark:bg-gray-800"
           />
         )}
       </div>
