@@ -70,7 +70,7 @@ We are releasing a quickstart under llama-recipes to encourage the open source c
 Some ideas on how to improve the agent further:
 
 - Using web-task datasets such as [**Mind2Web**](https://osu-nlp-group.github.io/Mind2Web/) to fine-tune Llama on agentic web workflows. 
-- Implementing a scalable framework for Llama inspired browser agents.
+- Implementing a scalable framework for Llama-powered browser agents.
 - Grounding the screenshot and accessibility tree with OCR + element linking. 
 
 
