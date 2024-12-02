@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ["latin"] });
 const baseUrl = BASE_URL;
 
 export const metadata: Metadata = {
-  title: `Browser Use Blog`,
-  description: 'A blog about getting started with Browser Use',
+  title: `Browser Use: Have Llama do the work`,
+  description: 'A blog about browser use with Llama 3.2',
   openGraph: {
     images: [{
       url: `${baseUrl}/favicon/github_logo.png`
