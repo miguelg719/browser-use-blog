@@ -22,7 +22,7 @@ Consider the typical web task—filling out a multi-step form, conducting resear
 - Enhanced focus on high-value strategic work
 <!-- - Reduced cognitive fatigue -->
 
-Today, with the rise of AI models like Llama 3.2, the dream is becoming a reality. The power of LLMs has reshaped how computers understand intent, and Llama models excel at understanding you, your questions, and your needs. Other providers are already offering similar capabilities (most of the times behind closed curtains and paywalls) but Meta's commitment to open source provides a long-term advantage. No matter where the current ceiling is, open source development is always catching up to the latest advancements by private companies thanks to efforts like Llama. By leveraging open source development, a small team can build products that compete with large companies within a fraction of the cost and without compromising performance. This is the power of open source.
+Today, with the rise of AI models like Llama 3.2, the dream is becoming a reality. The power of LLMs has reshaped how computers understand intent, and Llama models excel at understanding you, your questions, your needs. Other providers are already offering similar capabilities (most of the times behind closed curtains and paywalls) but Meta's commitment to open source provides a long-term advantage. No matter where the current ceiling is, open source development is always catching up to the latest advancements by private companies thanks to efforts like Llama. By leveraging open source development, a small team can build products that compete with large companies within a fraction of the cost and without compromising performance. This is the power of open source.
 
 
 ### **Browser-Use Llama**
@@ -30,22 +30,38 @@ Today, with the rise of AI models like Llama 3.2, the dream is becoming a realit
 In this post, we introduce a new browser agent that leverages Llama 3.2 to help you complete tasks on the web. The agent is enhanced with a set of tools that allow it to interact with the web in a way that is more natural and human-like: by clicking, scrolling, and typing. We use Playwright (an improved version of Puppeteer) as the interface to build the tools upon, release a set of prompts and a framework for providing context that enhance the agent's performance/accuracy, and provide a quickstart to encourage the open source community to build upon it.
 
 
-#### Dive into playwright tools
+Tool use refers to the ability of an agent to leverage external utilities or systems (most of the times through APIs) to accomplish tasks it couldn’t complete on its own. For example, a model that can't do math can use a calculator API to get the result of an equation. Playwright emerged as an advanced browser automation testing framework (that improved on the capablitities of it predecessor Puppeteer). Today, we are repurposing it to become the LLM's gateway to the web. By carefully crafting the tools for the agent through Playwright scripts, we can provide the agent with the ability to navigate, click, and type on web pages. For example:
 
+```python
+"""
+Consider output as the generated response from Llama. 
+  output = {"action": "navigation", "url": "https://www.google.com"}
+    or 
+  output = {"action": "click", "selector": "button=Search"}
+And page as a browser webpage. 
+"""
 
-#### dive into context
+if output["action"] == "navigation":
+  await page.goto(output["url"])
 
+elif output["action"] == "click":
+  selector = output["selector"].split("=")
+  selector_type = selector[0]
+  selector_name = selector[1]
+  await page.get_by_role(selector_type, name=selector_name).first.click()
 
-#### Next steps
+elif output["action"] == "fill":
+  selector = output["selector"].split("=")
+  selector_type = selector[0]
+  selector_name = selector[1]
+  await page.get_by_role(selector_type, name=selector_name).fill(output["value"])
 
+```
 
+How can the agent know which action to take at any given time? The answer is context. Context refers to the information or background that helps a model understand and respond accurately to a task or query. In browser-use, providing the agent with digestable context is the single most important factor to improve its accuracy at completing tasks. We provide context by storing a history of messages between user and agent, the history of actions performed by the agent, a screenshot and the accessibility tree of the current page. Historically, web automation relied heavily on HTML parsing and CSS selectors to extract information. While effective in static environments, this approach struggles in today’s web ecosystem, where optimization builds show little visibility into how they render content. For this reason, we pass the accessibility tree to the agent as the interface to the current page. Accessibility trees provide a simplified representation of the elements in the page, so the agent can 'see' and interact with the page. Notice how see is in quotes-it is not the best analogy. In fact, how the agent actually sees the page is through a screenshot. For this reason, the new Llama 3.2 vision models are excellent candidates for our application, because they are one of the first open-source multimodal LLMs that can understand both text and images alike. 
 
+We are releasing a quickstart under llama-recipes to encourage the open source community to build upon it. Our work exists thanks to the efforts of giants before us, and this is our way of doing our part to give back. To dive deeper into browser use check out the quickstart notebook in 
 
-Open source initiatives (like the ones from Meta) are already beginning to bear fruit.
-, as Llama models continue to push the ceiling of capabilities for open source models.
+[**https://github.com/meta-llama/llama-recipes/tree/main/recipes/use_cases**](https://github.com/meta-llama/llama-recipes/tree/main/recipes/use_cases)
 
-Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
-
-## Lorem Ipsum
-
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.
+### **Next steps**
