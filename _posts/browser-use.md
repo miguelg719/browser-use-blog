@@ -62,7 +62,7 @@ How can the agent know which action to take at any given time? The answer is con
 
 We are releasing a quickstart under llama-recipes to encourage the open source community to build upon it. Our work exists thanks to the work of giants, and this is our way of doing our part to give back. To dive deeper into browser use check out the quickstart notebook in 
 
-[**https://github.com/meta-llama/llama-recipes/tree/main/recipes/use_cases/browser_use**](https://github.com/meta-llama/llama-recipes/tree/main/recipes/use_cases/browser_use)
+[**https://github.com/meta-llama/llama-cookbook/tree/main/end-to-end-use-cases/browser_use**](https://github.com/meta-llama/llama-cookbook/tree/main/end-to-end-use-cases/browser_use)
 
 
 ### **Next steps**
